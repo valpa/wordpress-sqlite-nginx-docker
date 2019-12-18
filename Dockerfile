@@ -1,5 +1,5 @@
 from nginx:latest
-MAINTAINER Zeno Zeng <zenoofzeng@gmail.com>
+MAINTAINER Jerry <valpassing@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -10,7 +10,7 @@ RUN apt-get update
 RUN apt-get -y install php5-fpm unzip curl apt-utils php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl
 
 RUN rm -rf ${DOCUMENT_ROOT}/*
-RUN curl -o wordpress.tar.gz https://wordpress.org/latest.tar.gz
+RUN curl -o wordpress.tar.gz https://cn.wordpress.org/latest-zh_CN.tar.gz
 RUN tar -xzvf /wordpress.tar.gz --strip-components=1 --directory ${DOCUMENT_ROOT}
 
 RUN curl -o sqlite-plugin.zip https://downloads.wordpress.org/plugin/sqlite-integration.1.8.1.zip
@@ -39,6 +39,7 @@ RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 10M/g" /etc/
 RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 10M/g" /etc/php5/fpm/php.ini
 RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php5/fpm/pool.d/www.conf
 RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0666/g" /etc/php5/fpm/pool.d/www.conf
+
 
 RUN chown -R www-data.www-data ${DOCUMENT_ROOT}
 
